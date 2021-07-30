@@ -2,7 +2,7 @@ const express = require('express')
 const router  = express.Router()
 const products = require('../controllers/products.controller')
 const {check} =  require('express-validator')
-const TypeOfProduct = require('../models/typeOfProducts.model')
+const TypeOfProduct = require('../models/typeProducts.model')
 const {validateFields} = require('../middlewares/validateFields')
 
 

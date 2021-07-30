@@ -32,7 +32,7 @@ class Server {
 
     this.app.use('/api/user', require("../routes/user.routes")() )
     this.app.use('/api/product', require('../routes/products.routes')())
-    this.app.use('/api/producttype', require('../routes/typeOfProduct.routes')())
+    this.app.use('/api/producttype', require('../routes/typeProduct.routes')())
   }
 
   start(){
