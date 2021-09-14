@@ -7,7 +7,6 @@ const bcryptjs = require('bcryptjs')
 const createUser = async(req, res) =>{
   // Ver errores de express-validator- en rutas.
 
-
   //Extraer datos del, post req
   const {name, email, password, rol} = req.body.user
   const userInsert = new User({name, email, password, rol})
@@ -39,4 +38,15 @@ const getInfo = (req, res)=>{
 } 
 
 
-module.exports  = {createUser, getInfo};
+/******************* */
+
+
+const signIn = (req, res)=>{
+
+  res.send({hola : "Holaa"})
+
+}
+
+
+
+module.exports  = {createUser, getInfo, signIn};

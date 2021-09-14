@@ -4,7 +4,7 @@ const  {Schema, model} = require('mongoose')
 const TypeOfProductSchema = Schema({
   type:{
     type: String,
-    anum: ['SIMPLE', 'DULCE', 'TOSTADO', 'COMBINADO', 'ARROLLADO'],
+    //anum: ['SIMPLE', 'DULCE', 'TOSTADO', 'COMBINADO', 'ARROLLADO'],
     required: true,
     unique: true
   }

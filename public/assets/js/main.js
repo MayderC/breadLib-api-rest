@@ -1,13 +1,18 @@
+var usuarios = [
+  {
+    nombre: 'toni',
+    online: true
+  },
+  {
+    nombre: 'emi',
+    online: true
+  },
+  {
+    nombre: 'agus',
+    online: false
+  }
+]
 
-let vowels = ['a', 'e', 'i', 'o', 'u']
-let otro = vowels
-let newArray = vowels.filter(v => v != 1)
 
-
-vowels.pop()
-vowels.push("h")
-
-
-console.log(newArray)
-console.log(vowels)
-console.log(otro)
+const onlineUser = usuarios.filter(u => u.online == true)
+console.log(onlineUser)

@@ -2,8 +2,11 @@ const express = require('express');
 const con = require('../database/config');
 require("dotenv").config();
 const os = require("os");
+const cors = require('cors')
 
-
+/**
+ * Clase de nuestro servidor 
+ */
 
 class Server {
   
@@ -11,7 +14,6 @@ class Server {
     this.app = express();
     this.port = process.env.PORT;
     this.miIp = os.networkInterfaces()['Wi-Fi'][1].address;
-
 
     this.conexion() 
     this.middlewares()
@@ -23,16 +25,16 @@ class Server {
   }
 
   middlewares(){
-
+    this.app.use(cors())
     this.app.use(express.json())
     this.app.use(express.static('public'))
   }
 
   routes(){    
-
     this.app.use('/api/user', require("../routes/user.routes")() )
-    this.app.use('/api/product', require('../routes/products.routes')())
+    this.app.use('/api/products', require('../routes/products.routes')())
     this.app.use('/api/producttype', require('../routes/typeProduct.routes')())
+    this.app.use('/api/orders', require('../routes/order.routes')())
   }
 
   start(){

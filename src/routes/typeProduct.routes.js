@@ -3,8 +3,6 @@ const Router = express.Router()
 const typeProduct = require('../controllers/typeProducts.controller')
 
 module.exports = ()=>{
-
-  Router.post('/insert', typeProduct.insertTypeOfProduct)
-
+  Router.post('/', typeProduct.insertTypeOfProduct)
   return Router
 }

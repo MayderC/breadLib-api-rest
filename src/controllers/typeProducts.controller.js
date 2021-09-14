@@ -9,7 +9,7 @@ const insertTypeOfProduct = async (req, res)=>{
   if(result){
 
     return res.status(400).send({
-      msg : `Y existe el tipo de producto ${type}`
+      msg : `Ya existe el tipo de producto ${type}`
     })
   }
 

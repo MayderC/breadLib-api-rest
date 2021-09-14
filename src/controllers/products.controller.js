@@ -1,11 +1,15 @@
 const ProductModel = require('../models/products.model')
 
-const inserProduct = async(req, res)=>{
 
+
+/********************************************************************* */
+/**                         INSERTAR  PRODUCTOS                        */
+/********************************************************************* */
+
+const inserProduct = async(req, res)=>{
+  // Destructuramos y obtenemos solo que que se necesita guardar,
   const {name, description, type, price, stock, img} = req.body.product
   const product = new ProductModel({name, description, type, price, stock, img})
-
-
   const result = await ProductModel.findOne({type})
   // se actualiza el stock si existe el  a insertar.
   if(result){
@@ -25,18 +29,48 @@ const inserProduct = async(req, res)=>{
 
     //Actualizacion en mongo, retorna el documento actualizado
     const newProductUpdated =  await ProductModel.findByIdAndUpdate(result._id, {stock : newStockToSave})
-    return res.status(200).send({newProductUpdated})
+    const {name : iName, stock: iStock, type: iType } = newProductUpdated
+    return res.status(200).send({iName, iType, iStock})
   }
 
+
+  // En este try se guardan los datos en la base de datos
+  // si algo sale mal, entra al catch y retorna un error/badrequest
   try {
     product.save()
+    return res.status(201).json(req.body.product)
   } catch (error) {
-    
+    return res.status(400).send({msg : "error al insertar datos"})
   }
+}
 
-  return res.status(201).json(req.body.product)
+/********************************************************************* */
+/**                     OBTENER TODOS LOS PRODUCTOS                    */
+/********************************************************************* */
+
+/**En esta funcion getAllProducts: se obtiene todos los productos de la base de datos
+ * si encuentra resutados, entonces se recorre el array de objtos para solo retornar 
+ * lo que se necesita y evitar enviar datos que no queremor mostrar en el frontend
+ * si no encuentra nada se salta el if y retorna un bad request.
+ */
+
+const getAllProducts = async (req, res)=>{
+  const result = await ProductModel.find()
+  if(result){
+    const toResponse = result.map(r => ({
+      name        : r.name,
+      description : r.description,
+      type        : r.type,
+      price       : r.price,
+      img         : r.img,
+      stock       : r.stock
+    }))
+    return res.status(200).json({products: toResponse})
+  }
+  return res.status(404).se.json({msg: "No se encontraron productos."})
 }
 
 module.exports = {
-  inserProduct
+  inserProduct,
+  getAllProducts
 }

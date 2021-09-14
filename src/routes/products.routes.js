@@ -2,24 +2,30 @@ const express = require('express')
 const router  = express.Router()
 const products = require('../controllers/products.controller')
 const {check} =  require('express-validator')
-const TypeOfProduct = require('../models/typeProducts.model')
 const {validateFields} = require('../middlewares/validateFields')
+const {isTypeOfProductValid, validateStock} = require('../helpers/productsValidators')
 
 
 module.exports = ()=>{
 
-  router.post('/insert',[
-    check('product.type').custom(async(item) =>{
+  /**Esta ruta llama el controlador que regresa toda la lista de productos */
 
-      const result = await TypeOfProduct.findOne({type: item})
-      if(!result){
+  router.get('/', products.getAllProducts)
 
-        throw new Error("No existe un tipo de producto llamado: "+item)
-      }
+  /**Validaciones antes de insertar un producto 
+   * tipo de producto
+   * stock del producto o cantidad a ingresar.
+  */
 
-    }),
+  router.post('/',
+  [
+    check('product.type').custom(isTypeOfProductValid),
+    check('product.stock').custom(validateStock),
     validateFields
-  ] ,products.inserProduct)
+  ] ,
+  products.inserProduct)
+
+  
 
 
 
