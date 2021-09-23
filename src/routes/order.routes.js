@@ -10,17 +10,10 @@ module.exports = ()=>{
 
   router.post('/',[
     check('order.type').custom(isTypeOfProductValid), 
-
-
-    // verifica que la cantidd en nueva orden, se menos o igual a la 
+    // verifica que la cantidad en nueva orden se menor o igual a la 
     // cantidad en stock
-
     check('order').custom(stockAndQuantityValidator),
-
     // Proximo verificar que sea un usuario logeado.
-
-
-
     validateFields
   ], 
   order.insertOrder)

@@ -1,11 +1,12 @@
 const express = require('express')
 const router  = express.Router()
-const products = require('../controllers/products.controller')
 const {check} =  require('express-validator')
-const {validateFields} = require('../middlewares/validateFields')
+const products = require('../controllers/products.controller')
 const {isTypeOfProductValid, validateStock} = require('../helpers/productsValidators')
 
-
+const {validateFields} = require('../middlewares/validateFields')
+const {validateJwt} = require('../middlewares/validate-jwt')
+const  {isAdmin} = require('../middlewares/validate-role')
 module.exports = ()=>{
 
   /**Esta ruta llama el controlador que regresa toda la lista de productos */
@@ -26,7 +27,9 @@ module.exports = ()=>{
   products.inserProduct)
 
   
-
+  router.delete('/:id', [validateJwt, isAdmin], (req, res)=>{
+    res.send({msg :"Eres Admin"})
+  })
 
 
   return router

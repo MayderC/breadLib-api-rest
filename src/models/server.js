@@ -13,7 +13,6 @@ class Server {
   constructor(){
     this.app = express();
     this.port = process.env.PORT;
-    this.miIp = os.networkInterfaces()['Wi-Fi'][1].address;
 
     this.conexion() 
     this.middlewares()
@@ -35,11 +34,12 @@ class Server {
     this.app.use('/api/products', require('../routes/products.routes')())
     this.app.use('/api/producttype', require('../routes/typeProduct.routes')())
     this.app.use('/api/orders', require('../routes/order.routes')())
+    this.app.use('/api/auth', require('../routes/auth.routes')())
   }
 
   start(){
     this.app.listen(parseInt(this.port), () => {
-      console.log(`http://${this.miIp}:${this.port}`)
+      console.log(`http://localhost:${this.port}`)
     })
   }
 }
